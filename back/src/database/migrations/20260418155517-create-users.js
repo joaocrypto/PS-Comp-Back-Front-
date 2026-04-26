@@ -34,6 +34,14 @@ module.exports = {
       updated_at: {
         type: Sequelize.DATE,
         allowNull: false,
+      },
+      password_reset_codigo: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      password_reset_expira: {
+        type: Sequelize.DATE,
+        allowNull: true,
       }
     });
   },
