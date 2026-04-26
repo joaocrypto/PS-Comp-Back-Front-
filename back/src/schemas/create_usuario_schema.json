@@ -13,10 +13,14 @@
     "password": {
         "type": "string",
         "minimum": 6
+    },
+    "is_admin": {
+        "type": "boolean"
     }
   },
   "required": ["user",
     "email",
-    "password"
+    "password",
+    "is_admin"
   ]
 }
