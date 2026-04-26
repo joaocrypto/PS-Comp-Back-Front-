@@ -1,10 +1,11 @@
 const jwt = require('jsonwebtoken');
 const Usuarios = require('../models/Usuarios');
+const  {encrypt} = require('../../utils/crypt');
 
 class AutenticadorController {
     async autenticar(req, res) {
         
-        const { email, user, password } = req.body;
+        const { email, password } = req.body;
 
         const usuario = await Usuarios.findOne({
             where: { email },
@@ -18,9 +19,10 @@ class AutenticadorController {
             return res.status(401).json({ error: 'Senhas não batem!'});
         }
 
-        
+        const { iv, content } = encrypt(usuario.id);
+        const newId = `${iv}:${content}`;
 
-        const token = jwt.sign({ id }, process.env.HASH_BCRYPT, {
+        const token = jwt.sign({ userId: newId, is_admin: usuario.is_admin }, process.env.HASH_BCRYPT, {
             expiresIn: '7d'
         });
 
@@ -28,10 +30,13 @@ class AutenticadorController {
             user: {
                 id: usuario.id,
                 user: usuario.user,
+                is_admin: usuario.is_admin,
             },
             token,
         });
     }
+
+
 }
 
 module.exports = new AutenticadorController();
