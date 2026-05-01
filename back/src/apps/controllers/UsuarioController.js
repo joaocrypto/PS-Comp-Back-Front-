@@ -3,7 +3,7 @@ const Usuarios = require('../models/Usuarios');
 class UsuarioController {
     async create(req, res){
         try{
-            const { user, email, password, is_admin } = req.body;
+            const { user, email, password, confirmPassword, is_admin } = req.body;
             
             const verificaUsuario = await Usuarios.findOne({
                 where: {
@@ -19,6 +19,10 @@ class UsuarioController {
 
             if (req.is_admin === true) {
                 admin = is_admin;
+            }
+
+            if (password != confirmPassword) {
+                return res.status(401).json({message: 'As senhas não coincidem!'})
             }
 
             const usuario = await Usuarios.create({
