@@ -37,7 +37,6 @@ class UsuarioController {
             }
 
             return res.status(201).json({
-                id: usuario.id,
                 user: usuario.user,
                 email: usuario.email,
                 is_admin: usuario.is_admin,
