@@ -3,7 +3,27 @@ import "./Navbar.css";
 import { NavLink, Link } from "react-router-dom";
 import { BsSearch, BsHouseDoorFill, BsFillPersonFill, BsFillCameraFill } from "react-icons/bs";
 
+import { useState } from "react";
+import { useAuth } from "../hooks/useAuth";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
+import { logout, reset } from '../slices/authSlice'
+
 const Navbar = () => {
+
+    const { auth } = useAuth();
+    const { user } = useSelector((state) => state.auth);
+
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const handleLogout = () => {
+        dispatch(logout());
+        dispatch(logout());
+        navigate("/auth/login");
+    };
+
   return (
     <nav id="nav">
         <form id="search-form">
@@ -14,17 +34,27 @@ const Navbar = () => {
             <Link to="/" >CineRate</Link>
         </div>
         <ul id="nav-links">
-            <li>
-                <NavLink to="/">
-                    <BsHouseDoorFill />
-                </NavLink>
-            </li>
-            <li>
-                <NavLink to="/auth/login">Entrar</NavLink>
-            </li>
-            <li>
-                <NavLink to="/auth/register">Cadastrar</NavLink>
-            </li>
+            {auth ? (
+                <>
+                    <li>
+                        <NavLink to="/">
+                            <BsHouseDoorFill />
+                        </NavLink>
+                    </li>
+                    <li>
+                        <span onClick={handleLogout}>Sair</span>
+                    </li>
+                </>
+            ) : (
+                <>
+                    <li>
+                        <NavLink to="/auth/login">Entrar</NavLink>
+                    </li>
+                    <li>
+                        <NavLink to="/auth/register">Cadastrar</NavLink>
+                    </li>
+                </>
+            )}
         </ul>
     </nav>
   )
