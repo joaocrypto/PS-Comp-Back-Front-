@@ -1,5 +1,7 @@
 #login,
-#register {
+#register,
+#forgot-password,
+#reset-password {
   border: 1px solid #363636;
   background-color: #000;
   padding: 1.5em 2em;
@@ -8,7 +10,9 @@
 }
 
 #login h2,
-#register h2 {
+#register h2,
+#forgot-password h2,
+#reset-password h2 {
   text-align: center;
   font-size: 2.1em;
   margin-top: 0;
@@ -21,19 +25,25 @@
 }
 
 #login form,
-#register form {
+#register form,
+#forgot-password form,
+#reset-password form {
   padding-bottom: 1.5em;
   margin-bottom: 1.5em;
   border-bottom: 1px solid #363636;
 }
 
 #login p,
-#register p {
+#register p,
+#forgot-password p,
+#reset-password p {
   text-align: center;
 }
 
 #login p a,
-#register p a {
+#register p a,
+#forgot-password p a,
+#reset-password p a {
   font-weight: bold;
   color: #0094f6;
 }
