@@ -2,7 +2,7 @@ import "./Auth.css";
 
 
 import { Link } from "react-router-dom";
-
+import Message from "../../components/Message";
 
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -68,7 +68,8 @@ const Register = () => {
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 value={confirmPassword || ""}
             />
-            <input type="submit" value="Cadastrar" />
+            <input type="submit" value={loading ? "Entrando..." : "Entrar"} disabled={loading} />
+            {error && <Message msg={error} type="error" />}
         </form>
         <p>
             Já tem conta? <Link to="/auth/login">Clique aqui</Link>
