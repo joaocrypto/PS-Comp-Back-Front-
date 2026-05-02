@@ -12,7 +12,7 @@ const schemaValidator = (schema) => (req, res, next) => {
         }
 
         return res.status(401).send({
-            schemaError: messageError,
+            error: messageError[0],
         });
     }
     return next();

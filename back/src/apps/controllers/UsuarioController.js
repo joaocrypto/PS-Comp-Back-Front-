@@ -5,6 +5,8 @@ class UsuarioController {
         try{
             const { user, email, password, confirmPassword, is_admin } = req.body;
             
+            
+
             const verificaUsuario = await Usuarios.findOne({
                 where: {
                     email,
@@ -12,7 +14,7 @@ class UsuarioController {
             });
 
             if (verificaUsuario) {
-                return res.status(400).json({message: 'Usuario já existe!'});
+                return res.status(400).json({error: 'Usuario já existe!'});
             }
 
             let admin = false;
@@ -22,7 +24,7 @@ class UsuarioController {
             }
 
             if (password != confirmPassword) {
-                return res.status(401).json({message: 'As senhas não coincidem!'})
+                return res.status(401).json({error: 'As senhas não coincidem!'})
             }
 
             const usuario = await Usuarios.create({
@@ -33,7 +35,7 @@ class UsuarioController {
             });
             
             if (!usuario) {
-                return res.status(400).json({message: 'Falha ao criar usuário!'})
+                return res.status(400).json({error: 'Falha ao criar usuário!'})
             }
 
             return res.status(201).json({
