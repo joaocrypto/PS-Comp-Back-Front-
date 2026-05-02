@@ -20,10 +20,10 @@ const Navbar = () => {
                 </NavLink>
             </li>
             <li>
-                <NavLink to="/login">Entrar</NavLink>
+                <NavLink to="/auth/login">Entrar</NavLink>
             </li>
             <li>
-                <NavLink to="/register">Cadastrar</NavLink>
+                <NavLink to="/auth/register">Cadastrar</NavLink>
             </li>
         </ul>
     </nav>
