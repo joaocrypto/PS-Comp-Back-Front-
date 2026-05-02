@@ -9,7 +9,7 @@
     },
     "password": {
         "type": "string",
-        "minimum": 6
+        "minLength": 6
     }
   },
   "required": [
