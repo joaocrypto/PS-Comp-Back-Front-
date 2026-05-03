@@ -13,13 +13,11 @@ import { logout, reset } from '../slices/authSlice'
 const Navbar = () => {
 
     const { auth } = useAuth();
-    const { user } = useSelector((state) => state.auth);
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const handleLogout = () => {
-        dispatch(logout());
         dispatch(logout());
         navigate("/auth/login");
     };
@@ -40,6 +38,9 @@ const Navbar = () => {
                         <NavLink to="/">
                             <BsHouseDoorFill />
                         </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to="/criar-filme">Criar Filme</NavLink>
                     </li>
                     <li>
                         <span onClick={handleLogout}>Sair</span>
