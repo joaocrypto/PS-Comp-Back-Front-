@@ -32,7 +32,7 @@ services:
       db:
         condition: service_healthy
     command:
-      sh -c "npx sequelize-cli db:migrate && yarn start"
+      sh -c "npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all && yarn start"
 
   front:
     build: ./front
