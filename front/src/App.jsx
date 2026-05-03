@@ -14,6 +14,7 @@ import Login from './pages/Auth/Login';
 import Register from './pages/Auth/Register';
 import ForgotPassword from './pages/Auth/ForgotPassword';
 import ResetPassword from './pages/Auth/ResetPassword';
+import CriarFilme from './pages/CriarFilme/CriarFilme';
 
 
 function App() {
@@ -33,6 +34,10 @@ function App() {
           <Route 
             path="/" 
             element={auth ? <Home /> : <Navigate to="/auth/login"/>}
+          />
+          <Route 
+            path="/criar-filme" 
+            element={auth ? <CriarFilme /> : <Navigate to="/auth/login"/>}
           />
           <Route 
             path="/auth/login" 

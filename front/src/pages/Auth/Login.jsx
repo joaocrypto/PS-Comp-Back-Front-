@@ -50,7 +50,7 @@ const Login = () => {
                 {error && <Message msg={error} type="error" />}
             </form>
             <p>
-                Não tem conta? <Link to="/auth/register">Clique aqui</Link>
+                Não tem conta? <Link to="/auth/register">Cadastrar</Link>
             </p>
             <p>
                 Esqueceu a senha? <Link to="/auth/forgot-password">Recuperar</Link>
