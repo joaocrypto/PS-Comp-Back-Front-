@@ -15,6 +15,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      sinopse: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       ano: {
         type: Sequelize.DATE,
         allowNull: false,
