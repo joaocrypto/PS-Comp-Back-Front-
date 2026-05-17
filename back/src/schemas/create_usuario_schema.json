@@ -25,6 +25,7 @@
   "required": ["user",
     "email",
     "password",
+    "confirmPassword",
     "is_admin"
   ]
 }
