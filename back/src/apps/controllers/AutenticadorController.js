@@ -98,7 +98,7 @@ class AutenticadorController {
                 return res.status(400).json({ error: 'Código expirado' });
             }
 
-            if (password != confirmPassword) {
+            if (!password || password !== confirmPassword) {
                 return res.status(401).json({error: 'As senhas não coincidem!'})
             }
 
