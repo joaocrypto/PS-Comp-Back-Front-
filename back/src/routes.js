@@ -7,18 +7,21 @@ const AutenticadorController = require('./apps/controllers/AutenticadorControlle
 const UsuarioController = require('./apps/controllers/UsuarioController');
 
 const authSchema = require('./schemas/auth_schema.json');
-const usuarioSchema = require('./schemas/create_usuario_schema.json');
+const createUsuarioSchema = require('./schemas/create_usuario_schema.json');
 const codigoSchema = require('./schemas/codigo_schema.json');
 const resetPasswordSchema = require('./schemas/reset_password_schema.json');
+const updateUsuarioSchema = require('./schemas/update_usuario_schema.json');
 
 const routes = new Router();
 
-routes.post('/register', schemaValidator(usuarioSchema), UsuarioController.create);
+routes.post('/register', schemaValidator(createUsuarioSchema), UsuarioController.create);
 routes.post('/login', schemaValidator(authSchema), AutenticadorController.autenticar);
 routes.post('/login/recuperar_senha', schemaValidator(codigoSchema), AutenticadorController.esqueciSenha);
 routes.put('/login/recuperar_senha/confirmar', schemaValidator(resetPasswordSchema), AutenticadorController.resetaSenha);
 
 routes.use(AutenticadorMiddleware);
+
+routes.put('/user/update', schemaValidator(updateUsuarioSchema), UsuarioController.update);
 
 routes.get('/', (req, res) => {
     return res.send({message: 'Connected'});
