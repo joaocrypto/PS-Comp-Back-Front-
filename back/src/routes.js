@@ -22,6 +22,7 @@ routes.put('/login/recuperar_senha/confirmar', schemaValidator(resetPasswordSche
 routes.use(AutenticadorMiddleware);
 
 routes.put('/user/update', schemaValidator(updateUsuarioSchema), UsuarioController.update);
+routes.delete('/user/delete', UsuarioController.delete);
 
 routes.get('/', (req, res) => {
     return res.send({message: 'Connected'});

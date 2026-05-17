@@ -105,6 +105,26 @@ class UsuarioController {
             return res.status(500).json({ error: 'Erro interno no servidor' });
         }    
     }
+
+
+    async delete(req,res){
+        try {
+            const usuario = await Usuarios.findByPk(req.userId);
+            
+            if (!usuario) return res.status(400).json({ error: "Usuário não encontrado" });
+
+            await Usuarios.destroy({
+                where: {
+                    id: req.userId
+                }
+            });
+            
+            return res.status(200).json({ message: "Usuário deletado!" });
+            
+        } catch (err) {
+            return res.status(500).json({ error: "Erro interno no servidor!" });
+        }
+    }
 }
 
 module.exports = new UsuarioController();
