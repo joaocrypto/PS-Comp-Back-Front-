@@ -41,7 +41,7 @@ class FilmeController {
 
             const filme = await Filmes.findByPk(id);
             
-            if (!filme) return res.status(400).json({ error: "Filme não existe" });
+            if (!filme) return res.status(400).json({ error: "Filme não existe!" });
 
             const filmeDeletado = await Filmes.destroy({
                 where: {
@@ -66,7 +66,7 @@ class FilmeController {
 
             const filme = await Filmes.findByPk(id);
             
-            if (!filme) return res.status(400).json({ error: "Filme não existe" });
+            if (!filme) return res.status(400).json({ error: "Filme não existe!" });
 
             const { capa, titulo, genero, sinopse, ano } = req.body;
 
@@ -100,7 +100,7 @@ class FilmeController {
 
             const filme = await Filmes.findByPk(id);
                 
-            if (!filme) return res.status(400).json({ error: "Filme não existe" });
+            if (!filme) return res.status(400).json({ error: "Filme não existe!" });
 
             return res.status(201).json({
                 capa: filme.capa,
@@ -109,6 +109,33 @@ class FilmeController {
                 sinopse: filme.sinopse,
                 ano: filme.ano,
             });
+
+        } catch (error) {
+            return res.status(500).json({ error: "Erro interno no servidor!" });
+        }
+    }
+
+    async listAll(req, res){
+        try {
+            
+            const filmes = await Filmes.findAll();
+    
+            if (!filmes) return res.status(400).json({ error: "Falha ao buscar filmes!" });
+        
+            const formattedFilmes = [];
+        
+            for (const filme of filmes) {
+                formattedFilmes.push({
+                    id: filme.id,
+                    capa: filme.capa,
+                    titulo: filme.titulo,
+                    genero: filme.genero,
+                    sinopse: filme.sinopse,
+                    ano: filme.ano
+                });
+            }    
+
+            return res.status(201).json({data: formattedFilmes});            
 
         } catch (error) {
             return res.status(500).json({ error: "Erro interno no servidor!" });

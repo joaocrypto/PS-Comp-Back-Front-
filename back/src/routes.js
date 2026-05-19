@@ -25,6 +25,7 @@ routes.post('/filme', schemaValidator(createFilmeSchema), FilmeController.create
 routes.delete('/delete-filme/:id', FilmeController.delete);
 routes.put('/update-filme/:id', schemaValidator(updateFilmeSchema), FilmeController.update);
 routes.get('/list-filme/:id', FilmeController.listOne);
+routes.get('/list-all-filmes/', FilmeController.listAll);
 
 routes.use(AutenticadorMiddleware);
 
