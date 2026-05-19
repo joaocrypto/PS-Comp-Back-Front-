@@ -14,6 +14,26 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
+      usuarioId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Usuarios',
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
+      },
+      filmeId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Filmes',
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
+      },
       created_at: {
         type: Sequelize.DATE,
         allowNull: false
@@ -21,6 +41,12 @@ module.exports = {
       updated_at: {
         type: Sequelize.DATE,
         allowNull: false
+      }
+    }, {
+      uniqueKeys: {
+        actions_unique: {
+          fields: ['usuarioId', 'filmeId']
+        }
       }
     });
   },
