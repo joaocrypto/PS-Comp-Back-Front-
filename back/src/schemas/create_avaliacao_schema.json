@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CreateAvaliacaoSchema",
+  "type": "object",
+  "properties": {
+    "nota": {
+        "type": "integer"
+    },
+    "comentario": {
+        "type": "string"
+    }
+  },
+  "required": ["nota"
+  ]
+}
