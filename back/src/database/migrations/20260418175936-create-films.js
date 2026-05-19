@@ -7,6 +7,10 @@ module.exports = {
         primaryKey: true,
         allowNull: false,
       },
+      capa: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       titulo: {
         type: Sequelize.STRING,
         allowNull: false,
@@ -20,7 +24,7 @@ module.exports = {
         allowNull: false,
       },
       ano: {
-        type: Sequelize.DATE,
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
       created_at: {
