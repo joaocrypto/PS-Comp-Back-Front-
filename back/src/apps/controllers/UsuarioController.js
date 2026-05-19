@@ -96,8 +96,12 @@ class UsuarioController {
                 verificaUsuario.password = newPassword;
             }
 
-            await verificaUsuario.save();
+            const usuarioAtualizado = await verificaUsuario.save();
             
+            if (!usuarioAtualizado) {
+                return res.status(400).json({error: 'Falha ao atualizar usuário!'})
+            }
+
             return res.status(200).json({ message: 'Usuário atualizado!' });
 
         }catch(err) {
@@ -113,12 +117,16 @@ class UsuarioController {
             
             if (!usuario) return res.status(400).json({ error: "Usuário não encontrado" });
 
-            await Usuarios.destroy({
+            const usuarioDeleteado = await Usuarios.destroy({
                 where: {
                     id: req.userId
                 }
             });
             
+            if (!usuarioDeleteado) {
+                return res.status(400).json({error: 'Falha ao deletar usuário!'})
+            }
+
             return res.status(200).json({ message: "Usuário deletado!" });
             
         } catch (err) {
