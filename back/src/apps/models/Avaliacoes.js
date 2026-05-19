@@ -13,7 +13,7 @@ class Avaliacoes extends Model {
                 indexes: [
                     {
                         unique: true,
-                        fields: ['usuarioId', 'filmeId']
+                        fields: ['usuario_id', 'filme_id']
                     }
                 ]
             },
@@ -23,8 +23,8 @@ class Avaliacoes extends Model {
     }
 
     static associate(models) {
-        this.belongsTo(models.Usuarios, { foreignKey: 'usuarioId', as: 'usuario'  });
-        this.belongsTo(models.Filmes, { foreignKey: 'filmeId', as: 'filme'  });
+        this.belongsTo(models.Usuarios, { foreignKey: 'usuario_id', as: 'usuario'  });
+        this.belongsTo(models.Filmes, { foreignKey: 'filme_id', as: 'filme'  });
     }
 
 }

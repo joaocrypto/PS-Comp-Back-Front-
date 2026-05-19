@@ -14,7 +14,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      usuarioId: {
+      usuario_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
@@ -24,7 +24,7 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
-      filmeId: {
+      filme_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
@@ -45,7 +45,7 @@ module.exports = {
     }, {
       uniqueKeys: {
         actions_unique: {
-          fields: ['usuarioId', 'filmeId']
+          fields: ['usuario_id', 'filme_id']
         }
       }
     });
