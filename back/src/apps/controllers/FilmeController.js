@@ -93,6 +93,27 @@ class FilmeController {
             return res.status(500).json({ error: "Erro interno no servidor!" });
         }
     }
+
+    async listOne(req, res){
+        try {
+            const { id } = req.params;
+
+            const filme = await Filmes.findByPk(id);
+                
+            if (!filme) return res.status(400).json({ error: "Filme não existe" });
+
+            return res.status(201).json({
+                capa: filme.capa,
+                titulo: filme.titulo,
+                genero: filme.genero,
+                sinopse: filme.sinopse,
+                ano: filme.ano,
+            });
+
+        } catch (error) {
+            return res.status(500).json({ error: "Erro interno no servidor!" });
+        }
+    }
 }
 
 module.exports = new FilmeController();

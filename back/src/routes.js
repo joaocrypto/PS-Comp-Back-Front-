@@ -24,6 +24,7 @@ routes.put('/login/recuperar_senha/confirmar', schemaValidator(resetPasswordSche
 routes.post('/filme', schemaValidator(createFilmeSchema), FilmeController.create);
 routes.delete('/delete-filme/:id', FilmeController.delete);
 routes.put('/update-filme/:id', schemaValidator(updateFilmeSchema), FilmeController.update);
+routes.get('/list-filme/:id', FilmeController.listOne);
 
 routes.use(AutenticadorMiddleware);
 
