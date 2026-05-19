@@ -5,9 +5,11 @@ const AutenticadorIsAdmin = require('./apps/middlewares/isAdmin');
 
 const AutenticadorController = require('./apps/controllers/AutenticadorController');
 const UsuarioController = require('./apps/controllers/UsuarioController');
+const FilmeController = require('./apps/controllers/FilmeController');
 
 const authSchema = require('./schemas/auth_schema.json');
 const createUsuarioSchema = require('./schemas/create_usuario_schema.json');
+const createFilmeSchema = require('./schemas/create_filme_schema.json');
 const codigoSchema = require('./schemas/codigo_schema.json');
 const resetPasswordSchema = require('./schemas/reset_password_schema.json');
 const updateUsuarioSchema = require('./schemas/update_usuario_schema.json');
@@ -18,11 +20,13 @@ routes.post('/register', schemaValidator(createUsuarioSchema), UsuarioController
 routes.post('/login', schemaValidator(authSchema), AutenticadorController.autenticar);
 routes.post('/login/recuperar_senha', schemaValidator(codigoSchema), AutenticadorController.esqueciSenha);
 routes.put('/login/recuperar_senha/confirmar', schemaValidator(resetPasswordSchema), AutenticadorController.resetaSenha);
-
+routes.post('/filme', schemaValidator(createFilmeSchema), FilmeController.create);
 routes.use(AutenticadorMiddleware);
 
 routes.put('/user/update', schemaValidator(updateUsuarioSchema), UsuarioController.update);
 routes.delete('/user/delete', UsuarioController.delete);
+
+
 
 routes.get('/', (req, res) => {
     return res.send({message: 'Connected'});
