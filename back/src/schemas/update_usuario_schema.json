@@ -22,11 +22,5 @@
         "type": "string",
         "minLength": 6
     }
-  },
-  "required": ["user",
-    "email",
-    "password",
-    "newPassword",
-    "confirmPassword"
-  ]
+  }
 }
