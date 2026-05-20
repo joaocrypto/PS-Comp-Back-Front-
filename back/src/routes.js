@@ -16,6 +16,7 @@ const createFilmeSchema = require('./schemas/create_filme_schema.json');
 const createAvaliacaoSchema = require('./schemas/create_avaliacao_schema.json');
 const updateUsuarioSchema = require('./schemas/update_usuario_schema.json');
 const updateFilmeSchema = require('./schemas/update_filme_schema.json');
+const updateAvaliacaoSchema = require('./schemas/update_avaliacao_schema.json');
 
 const routes = new Router();
 
@@ -36,6 +37,7 @@ routes.delete('/user/delete', UsuarioController.delete);
 
 
 routes.post('/list-filme/:id/create-avaliacao', schemaValidator(createAvaliacaoSchema), AvaliacaoController.create);
+routes.put('/list-filme/:id/update-avaliacao', schemaValidator(updateAvaliacaoSchema), AvaliacaoController.update);
 routes.delete('/list-filme/:id/delete-avaliacao', AvaliacaoController.delete);
 
 routes.get('/', (req, res) => {

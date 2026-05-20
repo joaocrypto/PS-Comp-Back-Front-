@@ -72,6 +72,45 @@ class AvaliacaoController {
         }
     }
 
+    async update(req, res){
+        try {
+            const filme_id = req.params.id;
+            const usuario_id = req.userId;
+
+            const { nota, comentario } = req.body;
+
+            const avaliacao = await Avaliacoes.findOne({
+                where: {
+                    filme_id,
+                    usuario_id,
+                },
+            });
+
+            if (!avaliacao) {
+                return res.status(400).json({error: 'Avaliação não existe!'});
+            }
+
+            if (nota) {
+                if (nota <= 0 || nota > 10) {
+                    return res.status(400).json({error: 'A nota deve ser um valor de 1 a 10!'});
+                }
+                avaliacao.nota = nota;
+            }
+
+            if (comentario) avaliacao.comentario = comentario;
+
+            avaliacao.save();
+
+            return res.status(200).json({ message: 'Avaliação atualizada!' });
+
+        } catch (error) {
+            if (error.name === 'SequelizeUniqueConstraintError') {
+                return res.status(409).json({ error: "Usuário limitado a uma avaliação por filme!" });
+            }
+            return res.status(500).json({ error: "Erro interno no servidor!" });
+        }
+    }
+
 }
 
 module.exports = new AvaliacaoController();
