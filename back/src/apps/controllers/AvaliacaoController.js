@@ -143,7 +143,7 @@ class AvaliacaoController {
         
             for (const avaliacao of avaliacoes) {
                 formattedAvaliacoes.push({
-                    usuario_id: avaliacao.usuario_id,
+                    filme_id: avaliacao.filme_id,
                     nota: avaliacao.nota,
                     comentario: avaliacao.comentario,
                     usuario: avaliacao.usuario,
