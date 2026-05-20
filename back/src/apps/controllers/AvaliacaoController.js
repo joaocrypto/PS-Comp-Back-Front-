@@ -1,4 +1,6 @@
+const Sequelize = require('sequelize');
 const Avaliacoes = require("../models/Avaliacoes");
+const Usuarios = require("../models/Usuarios");
 
 class AvaliacaoController {
     async create(req, res){
@@ -107,6 +109,51 @@ class AvaliacaoController {
             if (error.name === 'SequelizeUniqueConstraintError') {
                 return res.status(409).json({ error: "Usuário limitado a uma avaliação por filme!" });
             }
+            return res.status(500).json({ error: "Erro interno no servidor!" });
+        }
+    }
+
+    async list(req, res){
+        try {
+            const filme_id = req.params.id;
+            const usuario_id = req.userId;
+
+            const avaliacoes = await Avaliacoes.findAll({
+                include: [
+                    {
+                        model: Usuarios, as: 'usuario', required: true,
+                        attributes: ['id', 'user'],
+                    }
+                ],
+                where: {
+                    filme_id,
+                },
+                order: [
+                    [
+                        Sequelize.literal(`usuario_id = ${usuario_id}`),
+                        'DESC'
+                    ],
+                    ['created_at', 'DESC']
+                ]
+            });
+
+            if (!avaliacoes) return res.status(400).json({ error: "Falha ao buscar avaliações!" });
+        
+            const formattedAvaliacoes = [];
+        
+            for (const avaliacao of avaliacoes) {
+                formattedAvaliacoes.push({
+                    usuario_id: avaliacao.usuario_id,
+                    nota: avaliacao.nota,
+                    comentario: avaliacao.comentario,
+                    usuario: avaliacao.usuario,
+                });
+            }    
+
+            return res.status(201).json({data: formattedAvaliacoes});
+
+
+        } catch (error) {
             return res.status(500).json({ error: "Erro interno no servidor!" });
         }
     }
