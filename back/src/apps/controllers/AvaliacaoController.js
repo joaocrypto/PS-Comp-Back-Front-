@@ -36,6 +36,42 @@ class AvaliacaoController {
             return res.status(500).json({ error: "Erro interno no servidor!" });
         }
     }
+
+    async delete(req, res){
+        try {
+            const filme_id = req.params.id;
+
+            const usuario_id = req.userId;
+
+
+            const avaliacao = await Avaliacoes.findOne({
+                where: {
+                    filme_id,
+                    usuario_id,
+                },
+            });
+            
+            if (!avaliacao) return res.status(400).json({ error: "Avaliação não existe!" });
+
+            const avaliacaoDeletada = await Avaliacoes.destroy({
+                where: {
+                    filme_id,
+                    usuario_id,
+                }
+            });
+            
+            if (!avaliacaoDeletada) {
+                return res.status(400).json({error: 'Falha ao deletar avaliação!'})
+            }
+
+            return res.status(200).json({ message: "Avaliação deletada!" });
+
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({ error: "Erro interno no servidor!" });
+        }
+    }
+
 }
 
 module.exports = new AvaliacaoController();

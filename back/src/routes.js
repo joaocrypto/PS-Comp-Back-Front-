@@ -36,6 +36,7 @@ routes.delete('/user/delete', UsuarioController.delete);
 
 
 routes.post('/list-filme/:id/create-avaliacao', schemaValidator(createAvaliacaoSchema), AvaliacaoController.create);
+routes.delete('/list-filme/:id/delete-avaliacao', AvaliacaoController.delete);
 
 routes.get('/', (req, res) => {
     return res.send({message: 'Connected'});
