@@ -2,6 +2,8 @@ const { Router } = require('express');
 const schemaValidator = require('./apps/middlewares/schemaValidator');
 const AutenticadorMiddleware = require('./apps/middlewares/autenticador');
 const AutenticadorIsAdmin = require('./apps/middlewares/isAdmin');
+const upload = require('./configs/multer');
+const convertType = require('./utils/convertType');
 
 const AutenticadorController = require('./apps/controllers/AutenticadorController');
 const UsuarioController = require('./apps/controllers/UsuarioController');
@@ -24,11 +26,6 @@ routes.post('/register', schemaValidator(createUsuarioSchema), UsuarioController
 routes.post('/login', schemaValidator(authSchema), AutenticadorController.autenticar);
 routes.post('/login/recuperar_senha', schemaValidator(codigoSchema), AutenticadorController.esqueciSenha);
 routes.put('/login/recuperar_senha/confirmar', schemaValidator(resetPasswordSchema), AutenticadorController.resetaSenha);
-routes.post('/filme', schemaValidator(createFilmeSchema), FilmeController.create);
-routes.delete('/delete-filme/:id', FilmeController.delete);
-routes.put('/update-filme/:id', schemaValidator(updateFilmeSchema), FilmeController.update);
-routes.get('/list-filme/:id', FilmeController.listOne);
-routes.get('/list-all-filmes/', FilmeController.listAll);
 
 routes.use(AutenticadorMiddleware);
 
@@ -36,17 +33,20 @@ routes.put('/user/update', schemaValidator(updateUsuarioSchema), UsuarioControll
 routes.delete('/user/delete', UsuarioController.delete);
 
 
-routes.post('/list-filme/:id/create-avaliacao', schemaValidator(createAvaliacaoSchema), AvaliacaoController.create);
-routes.put('/list-filme/:id/update-avaliacao', schemaValidator(updateAvaliacaoSchema), AvaliacaoController.update);
-routes.delete('/list-filme/:id/delete-avaliacao', AvaliacaoController.delete);
-routes.get('/list-filme/:id/list-avaliacao', AvaliacaoController.list);
+routes.get('/filmes/list-filme/:id', FilmeController.listOne);
+routes.get('/filmes/list-all-filmes/', FilmeController.listAll);
 
-routes.get('/', (req, res) => {
-    return res.send({message: 'Connected'});
-});
+routes.post('/filmes/list-filme/:id/create-avaliacao', schemaValidator(createAvaliacaoSchema), AvaliacaoController.create);
+routes.put('/filmes/list-filme/:id/update-avaliacao', schemaValidator(updateAvaliacaoSchema), AvaliacaoController.update);
+routes.delete('/filmes/list-filme/:id/delete-avaliacao', AvaliacaoController.delete);
+routes.get('/filmes/list-filme/:id/list-avaliacao', AvaliacaoController.list);
 
 routes.use(AutenticadorIsAdmin);
 
-
+routes.post('/filmes', upload.single('capa'), convertType,
+    schemaValidator(createFilmeSchema), FilmeController.create);
+routes.put('/filmes/update-filme/:id', upload.single('capa'), convertType,
+    schemaValidator(updateFilmeSchema), FilmeController.update);
+routes.delete('/filmes/delete-filme/:id', FilmeController.delete);
 
 module.exports = routes;

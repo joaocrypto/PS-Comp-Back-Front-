@@ -3,9 +3,6 @@
   "title": "CreateFilmeSchema",
   "type": "object",
   "properties": {
-    "capa": {
-        "type": "string"
-    },
     "titulo": {
         "type": "string"
     },
@@ -19,8 +16,7 @@
         "type": "integer"
     }
   },
-  "required": ["capa",
-    "titulo",
+  "required": ["titulo",
     "genero",
     "sinopse",
     "ano"

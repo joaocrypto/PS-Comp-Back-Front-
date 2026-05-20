@@ -3,8 +3,13 @@ const Filmes = require("../models/Filmes");
 class FilmeController {
     async create(req, res){
         try {
-            const { capa, titulo, genero, sinopse, ano } = req.body;
+            const { titulo, genero, sinopse, ano } = req.body;
 
+            if (!req.file) {
+                return res.status(400).json({ error: 'Capa é obrigatória!'});
+            }
+
+            const capa = req.file?.path;
 
             if (ano > new Date().getFullYear()) {
                 return res.status(400).json({ error: "Coloque uma data válida!" });
@@ -31,6 +36,7 @@ class FilmeController {
             });
 
         } catch (error) {
+            console.log(error);
             return res.status(500).json({ error: "Erro interno no servidor!" });
         }
     }
@@ -68,7 +74,9 @@ class FilmeController {
             
             if (!filme) return res.status(400).json({ error: "Filme não existe!" });
 
-            const { capa, titulo, genero, sinopse, ano } = req.body;
+            const { titulo, genero, sinopse, ano } = req.body;
+
+            const capa = req.file?.path;
 
             if (capa) filme.capa = capa;
             if (titulo) filme.titulo = titulo;
