@@ -34,7 +34,7 @@ routes.delete('/user/delete', UsuarioController.delete);
 
 
 routes.get('/filmes/list-filme/:id', FilmeController.listOne);
-routes.get('/filmes/list-all-filmes/', FilmeController.listAll);
+routes.get('/filmes/list-all-filmes', FilmeController.listAll);
 
 routes.post('/filmes/list-filme/:id/create-avaliacao', schemaValidator(createAvaliacaoSchema), AvaliacaoController.create);
 routes.put('/filmes/list-filme/:id/update-avaliacao', schemaValidator(updateAvaliacaoSchema), AvaliacaoController.update);
@@ -43,7 +43,7 @@ routes.get('/filmes/list-filme/:id/list-avaliacao', AvaliacaoController.list);
 
 routes.use(AutenticadorIsAdmin);
 
-routes.post('/filmes', upload.single('capa'), convertType,
+routes.post('/filmes/create-filme', upload.single('capa'), convertType,
     schemaValidator(createFilmeSchema), FilmeController.create);
 routes.put('/filmes/update-filme/:id', upload.single('capa'), convertType,
     schemaValidator(updateFilmeSchema), FilmeController.update);
