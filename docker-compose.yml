@@ -22,7 +22,7 @@ services:
     build: ./back
     container_name: cinerate_back
     ports:
-      - "3000:3000"
+      - ${PORT}:${PORT}
     volumes:
       - ./back:/app
       - /app/node_modules
@@ -43,7 +43,8 @@ services:
       - ./front:/app
       - /node_modules
     environment:
-      - VITE_API_URL=http://localhost:3000
+      - VITE_API_URL=http://localhost:${PORT}
+      - VITE_UPLOAD_URL=https://res.cloudinary.com/ddii73m3a/image/upload;
     depends_on:
       - back
 
