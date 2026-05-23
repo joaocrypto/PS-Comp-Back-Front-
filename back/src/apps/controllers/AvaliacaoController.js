@@ -99,7 +99,9 @@ class AvaliacaoController {
                 avaliacao.nota = nota;
             }
 
-            if (comentario) avaliacao.comentario = comentario;
+            if (comentario) {
+                avaliacao.comentario = comentario;
+            }else avaliacao.comentario = null;
 
             avaliacao.save();
 
