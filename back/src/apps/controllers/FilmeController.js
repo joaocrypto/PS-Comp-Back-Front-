@@ -111,6 +111,7 @@ class FilmeController {
             if (!filme) return res.status(400).json({ error: "Filme não existe!" });
 
             return res.status(201).json({
+                id: filme.id,
                 capa: filme.capa,
                 titulo: filme.titulo,
                 genero: filme.genero,
