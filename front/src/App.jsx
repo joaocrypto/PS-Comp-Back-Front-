@@ -16,6 +16,7 @@ import Register from './pages/Auth/Register';
 import ForgotPassword from './pages/Auth/ForgotPassword';
 import ResetPassword from './pages/Auth/ResetPassword';
 import CriarFilme from './pages/CriarFilme/CriarFilme';
+import Filme from './pages/Filme/Filme';
 
 
 function App() {
@@ -40,6 +41,10 @@ function App() {
           <Route 
             path="/criar-filme" 
             element={(auth && isAdmin) ? <CriarFilme /> : <Navigate to="/auth/login"/>}
+          />
+          <Route 
+            path="/filme/:id"
+            element={auth ? <Filme /> : <Navigate to="/auth/login"/>}
           />
           <Route 
             path="/auth/login" 
