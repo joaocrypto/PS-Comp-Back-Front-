@@ -11,7 +11,7 @@ export const useIsAdmin = () => {
         if (usuario && usuario.is_admin) {
             setIsAdmin(true);
         }else {
-            setIsadmin(false);
+            setIsAdmin(false);
         }
     }, [usuario])
 
