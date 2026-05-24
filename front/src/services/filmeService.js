@@ -37,7 +37,7 @@ const updateFilme = async(data, id, token, image) => {
 
 const deleteFilme = async(id, token) => {
 
-    const config = requestConfig("DELETE", data, token);
+    const config = requestConfig("DELETE", null, token);
 
     try {
         
@@ -71,7 +71,7 @@ const getFilme = async(id, token) => {
 
 const getAllFilmes = async(token) => {
 
-    const config = requestConfig("GET", token);
+    const config = requestConfig("GET", null, token);  
 
     try {
         
