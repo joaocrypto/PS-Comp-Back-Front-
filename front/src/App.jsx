@@ -17,12 +17,13 @@ import ForgotPassword from './pages/Auth/ForgotPassword';
 import ResetPassword from './pages/Auth/ResetPassword';
 import CriarFilme from './pages/CriarFilme/CriarFilme';
 import Filme from './pages/Filme/Filme';
+import AtualizarFilme from './pages/CriarFilme/AtualizarFilme';
 
 
 function App() {
 
   const { auth, loading } = useAuth();
-  const { isAdmin } = useIsAdmin();
+  const isAdmin = useIsAdmin();
 
   if (loading) {
     return <p>Carregando...</p>
@@ -41,6 +42,10 @@ function App() {
           <Route 
             path="/criar-filme" 
             element={(auth && isAdmin) ? <CriarFilme /> : <Navigate to="/auth/login"/>}
+          />
+          <Route 
+            path="/filme/:id/atualizar-filme" 
+            element={(auth && isAdmin) ? <AtualizarFilme /> : <Navigate to="/auth/login"/>}
           />
           <Route 
             path="/filme/:id"
