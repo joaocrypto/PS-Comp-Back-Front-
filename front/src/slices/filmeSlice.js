@@ -3,6 +3,7 @@ import filmeService from "../services/filmeService";
 
 const initialState = {
     filme: {},
+    filmes: [],
     error: false,
     success: false,
     loading: false,
@@ -70,7 +71,7 @@ export const listOne = createAsyncThunk("filmes/list-filme",
 );
 
 export const listAll = createAsyncThunk("filmes/list-all-filmes",
-    async (thunkAPI) => {
+    async (_, thunkAPI) => {
 
         const token = thunkAPI.getState().auth.token;
 
@@ -156,11 +157,11 @@ export const filmeSlice = createSlice({
             state.loading = true;
             state.error = false;
         })
-        .addCase(listAll.fulfilled, (state) => {
+        .addCase(listAll.fulfilled, (state, action) => {
             state.loading = false;
             state.success = true;
             state.error = null;
-            state.filme = action.payload;
+            state.filmes = action.payload.data;
         })
         .addCase(listAll.rejected, (state, action) => {
             state.loading = false;
