@@ -44,7 +44,7 @@ services:
       - /node_modules
     environment:
       - VITE_API_URL=http://localhost:${PORT}
-      - VITE_UPLOAD_URL=https://res.cloudinary.com/ddii73m3a/image/upload;
+      - VITE_UPLOAD_URL=https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/image/upload;
     depends_on:
       - back
 
