@@ -101,18 +101,18 @@ const AtualizarFilme = () => {
     };
 
   return (
-    <div id="atualizar-filme">
-      
-        <button className="voltar-btn" onClick={() => navigate(-1)}>
-          ← Voltar
-        </button>
+    <div id="page">
+
+            <button className="voltar-btn" onClick={() => navigate(-1)}>
+            ← Voltar
+            </button>
 
         {loading ? (
         <Message msg="Carregando filme..." type="msg" />
       ) : error ? (
         <Message msg={error} type="error" />
       ) : (
-            <>
+            <div id="atualizar-filme">
                 <h2>Atualizar filme</h2>
                 <div className="capa">
                     {(filme.capa || previewCapa) ? (
@@ -168,7 +168,7 @@ const AtualizarFilme = () => {
                     {error && <Message msg={error} type="error" />}
                     {message && <Message msg={message} type="success" />}
                 </form>
-            </>
+            </div>
       )}
 
     </div>

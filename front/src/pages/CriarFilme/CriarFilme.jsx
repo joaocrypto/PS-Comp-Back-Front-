@@ -67,55 +67,57 @@ const CriarFilme = () => {
     };
 
   return (
-    <div id="criar-filme">
-        <h2>Criar filme</h2>
-        <div className="capa">
-            {capa ? (
-                      <img className="capa-imagem" src={URL.createObjectURL(capa)} alt={"Capa do Filme"} />
-                  ) : (
-                      <span>Sem imagem</span>
-            )}
+    <div id="page">
+        <div id="criar-filme">
+            <h2>Criar filme</h2>
+            <div className="capa">
+                {capa ? (
+                        <img className="capa-imagem" src={URL.createObjectURL(capa)} alt={"Capa do Filme"} />
+                    ) : (
+                        <span>Sem imagem</span>
+                )}
+            </div>
+            <form onSubmit={handleSubmit}>
+                <label>
+                    <span>Imagem:</span>
+                    <input type="file" onChange={handleFile}/>
+                </label>
+                <label>
+                    <span>Título:</span>
+                    <input type="text" placeholder="Digite o nome do filme"
+                        onChange={(e) => setTitulo(e.target.value)}
+                        value={titulo || ""}
+                    />
+                </label>
+                <label>
+                    <span>Gênero:</span>
+                    <input type="text" placeholder="Digite o gênero"
+                        onChange={(e) => setGenero(e.target.value)}
+                        value={genero || ""}
+                    />
+                </label>
+                <label>
+                    <span>Ano de criação:</span>
+                    <input type="text" placeholder="Digite o ano de criação"
+                        onChange={(e) => setAno(e.target.value)}
+                        value={ano || ""}
+                    />
+                </label>            
+                <label>
+                    <span>Sinopse:</span>
+                    <input type="text" placeholder="Descrição do filme"
+                        onChange={(e) => setSinopse(e.target.value)}
+                        value={sinopse || ""}
+                    />
+                </label>
+
+                {!loading && <input type="submit" value="Criar" />}
+                {loading && <input type="submit" disabled value="Aguarde..." />}
+                {error && <Message msg={error} type="error" />}
+                {message && <Message msg={message} type="success" />}
+            </form>
+
         </div>
-        <form onSubmit={handleSubmit}>
-            <label>
-                <span>Imagem:</span>
-                <input type="file" onChange={handleFile}/>
-            </label>
-            <label>
-                <span>Título:</span>
-                <input type="text" placeholder="Digite o nome do filme"
-                    onChange={(e) => setTitulo(e.target.value)}
-                    value={titulo || ""}
-                />
-            </label>
-            <label>
-                <span>Gênero:</span>
-                <input type="text" placeholder="Digite o gênero"
-                    onChange={(e) => setGenero(e.target.value)}
-                    value={genero || ""}
-                />
-            </label>
-            <label>
-                <span>Ano de criação:</span>
-                <input type="text" placeholder="Digite o ano de criação"
-                    onChange={(e) => setAno(e.target.value)}
-                    value={ano || ""}
-                />
-            </label>            
-            <label>
-                <span>Sinopse:</span>
-                <input type="text" placeholder="Descrição do filme"
-                    onChange={(e) => setSinopse(e.target.value)}
-                    value={sinopse || ""}
-                />
-            </label>
-
-            {!loading && <input type="submit" value="Criar" />}
-            {loading && <input type="submit" disabled value="Aguarde..." />}
-            {error && <Message msg={error} type="error" />}
-            {message && <Message msg={message} type="success" />}
-        </form>
-
     </div>
   )
 }
