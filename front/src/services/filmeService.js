@@ -24,7 +24,7 @@ const updateFilme = async(data, id, token, image) => {
 
     try {
         
-        const res = await fetch(api + "/filmes/update-filme" + id, config)
+        const res = await fetch(api + "/filmes/update-filme/" + id, config)
         .then((res) => res.json())
         .catch((err) => err);
 
@@ -35,13 +35,13 @@ const updateFilme = async(data, id, token, image) => {
     }
 };
 
-const deleteFilme = async(data, id, token) => {
+const deleteFilme = async(id, token) => {
 
     const config = requestConfig("DELETE", data, token);
 
     try {
         
-        const res = await fetch(api + "/filmes/delete-filme" + id, config)
+        const res = await fetch(api + "/filmes/delete-filme/" + id, config)
         .then((res) => res.json())
         .catch((err) => err);
 
@@ -52,13 +52,13 @@ const deleteFilme = async(data, id, token) => {
     }
 };
 
-const getFilme = async(data, id, token) => {
+const getFilme = async(id, token) => {
 
-    const config = requestConfig("GET", data, token);
+    const config = requestConfig("GET", null, token);
 
     try {
         
-        const res = await fetch(api + "/filmes/list-filme" + id, config)
+        const res = await fetch(api + "/filmes/list-filme/" + id, config)
         .then((res) => res.json())
         .catch((err) => err);
 
@@ -69,9 +69,9 @@ const getFilme = async(data, id, token) => {
     }
 };
 
-const getAllFilmes = async(data, token) => {
+const getAllFilmes = async(token) => {
 
-    const config = requestConfig("GET", data, token);
+    const config = requestConfig("GET", token);
 
     try {
         
