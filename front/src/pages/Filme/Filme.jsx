@@ -7,8 +7,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import { useIsAdmin } from "../../hooks/useIsAdmin";
-import { listOne } from "../../slices/filmeSlice";
-import { createAvaliacao, resetMessage, listAvaliacao } from "../../slices/avaliacaoSlice";
+import { deleteFilme, listOne } from "../../slices/filmeSlice";
+import { createAvaliacao, updateAvaliacao, deleteAvaliacao, resetMessage, listAvaliacao } from "../../slices/avaliacaoSlice";
 
 
 const Filme = () => {
@@ -20,11 +20,11 @@ const Filme = () => {
 
   const [nota, setNota] = useState("");    
   const [comentario, setComentario] = useState("");
-
+  const [avaliacaoExistente, setAvaliacaoExistente] = useState(null);
 
   const { filme, error, loading } = useSelector((state) => state.filme);
   const { avaliacoes, message: messageAvaliacao, error: errorAvaliacao, loading: loadingAvaliacao } = useSelector((state) => state.avaliacao);
-  console.log(avaliacoes);
+  const { usuario } = useSelector((state) => state.auth);
 
   useEffect(() => {
     if (id) {
@@ -36,6 +36,23 @@ const Filme = () => {
   useEffect(() => {
     dispatch(resetMessage());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (avaliacoes && usuario) {
+      const minhaAvaliacao = avaliacoes.find(
+        (avaliacao) => avaliacao.usuario?.id === usuario?.id
+      );
+      if (minhaAvaliacao) {
+        setAvaliacaoExistente(minhaAvaliacao);
+        setNota(minhaAvaliacao.nota);
+        setComentario(minhaAvaliacao.comentario || "");
+      } else {
+        setAvaliacaoExistente(null);
+        setNota("");
+        setComentario("");
+      }
+    }
+  }, [avaliacoes, usuario]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -50,7 +67,14 @@ const Filme = () => {
       comentario,
     };
 
-    const checaState = await dispatch(createAvaliacao({avaliacao, id}));
+    let checaState;
+    
+    if (avaliacaoExistente) {
+      checaState = await dispatch(updateAvaliacao({avaliacao, id}));
+    } else {
+      checaState = await dispatch(createAvaliacao({avaliacao, id}));
+    }
+
     if (checaState.meta.requestStatus === "fulfilled") {
       setNota("");
       setComentario("");
@@ -62,6 +86,39 @@ const Filme = () => {
       dispatch(resetMessage());
     }, 2000);
 
+  };
+
+  const handleDeleteFilme = async () => {
+
+    if (window.confirm("Tem certeza que deseja excluir este filme?")) {
+      
+      const checaState = await dispatch(deleteFilme(id));
+
+      if (checaState.meta.requestStatus === "fulfilled") {
+        alert("Filme excluído com sucesso!");
+        navigate("/");
+      }
+    }
+  };
+
+  const handleDeleteAvaliacao = async () => {
+
+    if (window.confirm("Tem certeza que deseja excluir sua avaliação?")) {
+      
+      const checaState = await dispatch(deleteAvaliacao(id));
+
+      if (checaState.meta.requestStatus === "fulfilled") {
+        setAvaliacaoExistente(null);
+        setNota("");
+        setComentario("");
+
+        dispatch(listAvaliacao(id));
+      }
+
+      setTimeout(() => {
+        dispatch(resetMessage());
+      }, 2000);
+    }
   };
 
   return (
@@ -95,12 +152,12 @@ const Filme = () => {
                 {isAdmin && (
                   <div className="filme-funcoes">
                     <div>
-                      <button className="btn" onClick={() => navigate('/filme/' + id + '/atualizar-filme')}>
+                      <button onClick={() => navigate('/filme/' + id + '/atualizar-filme')}>
                         Atualizar Filme
                       </button>
                     </div>
                     <div>
-                      <button className="filme-delete" onClick={() => navigate(-1)}>
+                      <button className="filme-delete" onClick={() => handleDeleteFilme()}>
                         Excluir Filme
                       </button>
                     </div>
@@ -136,7 +193,7 @@ const Filme = () => {
                     />
                   </label>
                 </div>
-                    {!loadingAvaliacao && <input type="submit" value="Avaliar" />}
+                    {!loadingAvaliacao && <input type="submit" value={avaliacaoExistente ? "Atualizar" : "Avaliar"} />}
                     {loadingAvaliacao && <input type="submit" disabled value="Aguarde..." />}
 
               </div>
@@ -145,11 +202,22 @@ const Filme = () => {
             </form>
             <section className="avaliacao-list">
               {avaliacoes && avaliacoes.length > 0 ? (
-                avaliacoes.map((avaliac) => (
+                avaliacoes.map((avaliac, index) => (
                   <div className="avaliacao-card" key={avaliac.id}>
                     <div className="avaliacao-top">
                       <strong>{avaliac.usuario?.user || "Usuário"}</strong>
-                      <span className="avaliacao-nota">Nota: {avaliac.nota}/10</span>
+                      <div className="avaliacao-top-right">
+                        {avaliacaoExistente && (index === 0) && (
+                          <div className="avaliacao-funcoes">
+                            <div>
+                              <button className="avaliacao-delete" onClick={() => handleDeleteAvaliacao()}>
+                                Excluir Avaliação
+                              </button>
+                            </div>
+                          </div>
+                        )}
+                        <span className="avaliacao-nota">Nota: {avaliac.nota}/10</span>
+                      </div>
                     </div>
                     <div>{avaliac.comentario ? (
                       avaliac.comentario

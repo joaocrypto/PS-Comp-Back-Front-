@@ -112,11 +112,29 @@
   color: #aaa;
 }
 
+.avaliacao-top-right {
+  display: flex;
+  gap: 1em;
+}
+
+.avaliacao-funcoes {
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 0.5em;
+}
+
+.avaliacao-delete {
+  padding: 0.35em 0.75em;
+  background-color: red;
+}
+
 .avaliacao-nota {
+  display: flex;
   background: #3b3b3b;
   color: white;
   padding: 0.35em 0.75em;
   font-weight: bold;
+  align-items: center;
   font-size: 0.95em;
 }
 
