@@ -95,7 +95,7 @@ const Filme = () => {
                 {isAdmin && (
                   <div className="filme-funcoes">
                     <div>
-                      <button className="btn" onClick={() => navigate(-1)}>
+                      <button className="btn" onClick={() => navigate('/filme/' + id + '/atualizar-filme')}>
                         Atualizar Filme
                       </button>
                     </div>
