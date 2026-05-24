@@ -22,6 +22,7 @@ const AtualizarFilme = () => {
     const [genero, setGenero] = useState("");
     const [ano, setAno] = useState("");
     const [sinopse, setSinopse] = useState("");
+    const [erroValidacao, setErroValidacao] = useState("");
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -63,6 +64,20 @@ const AtualizarFilme = () => {
         }
 
         if (ano) {
+            const apenasNumeros = /^\d+$/.test(ano);
+
+            if (!apenasNumeros ) {
+                setErroValidacao("O ano precisa ser um número!");
+                return;
+            }
+
+            const anoNumero = Number(ano);
+
+            if ((anoNumero > new Date().getFullYear())) {
+                setErroValidacao("Digite um ano válido!");
+                return;
+            }
+
             attFilme.ano = ano;
         }
 
@@ -84,6 +99,9 @@ const AtualizarFilme = () => {
             setAno("");
             setSinopse("");
         }
+
+        setErroValidacao("");
+
         setTimeout(() => {
             dispatch(resetMessage());
         }, 2000);
@@ -167,7 +185,8 @@ const AtualizarFilme = () => {
 
                     {!loading && <input type="submit" value="Atualizar" />}
                     {loading && <input type="submit" disabled value="Aguarde..." />}
-                    {error && <Message msg={error} type="error" />}
+                    {erroValidacao && <Message msg={erroValidacao} type="error" />}
+                    {!erroValidacao && error && <Message msg={error} type="error" />}
                     {message && <Message msg={message} type="success" />}
                 </form>
             </div>

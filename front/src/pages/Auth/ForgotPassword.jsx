@@ -10,6 +10,7 @@ import { forgotPassword, reset } from "../../slices/authSlice";
 const ForgotPassword = () => {
 
     const [email, setEmail] = useState("");
+    const [erroValidacao, setErroValidacao] = useState("");
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -19,10 +20,21 @@ const ForgotPassword = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
+        if (!email.trim()) {
+            setErroValidacao("Todos os campos são obrigatórios!");
+            return;
+        }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            setErroValidacao("Insira um e-mail válido!");
+            return;
+        }
+
         const data = {
             email
         };
-
+        setErroValidacao("");
         dispatch(forgotPassword(data));
     };
 
@@ -49,7 +61,8 @@ const ForgotPassword = () => {
                     value={email || ""}
                 />
                 <input type="submit" value={loading ? "Enviando..." : "Enviar Código"} disabled={loading} />
-                {error && <Message msg={error} type="error" />}
+                {erroValidacao && <Message msg={erroValidacao} type="error" />}
+                {!erroValidacao && error && <Message msg={error} type="error" />}
                 {success && <Message msg="Código enviado com sucesso! Verifique seu email." type="success" />}
             </form>
             <p>

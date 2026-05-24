@@ -11,6 +11,7 @@ const Login = () => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [erroValidacao, setErroValidacao] = useState("");
 
     const dispatch = useDispatch();
 
@@ -19,11 +20,28 @@ const Login = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
+        if (!email.trim() || !password) {
+            setErroValidacao("Todos os campos são obrigatórios!");
+            return;
+        }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            setErroValidacao("Insira um e-mail válido!");
+            return;
+        }
+
+        if (password.length < 6) {
+            setErroValidacao("A senha precisa ter no mínimo 6 caracteres!");
+            return;
+        }
+
         const credenciais = {
             email,
             password
         };
 
+        setErroValidacao("");
         dispatch(login(credenciais));
     };
 
@@ -47,7 +65,8 @@ const Login = () => {
                     value={password || ""}
                 />
                 <input type="submit" value={loading ? "Entrando..." : "Entrar"} disabled={loading} />
-                {error && <Message msg={error} type="error" />}
+                {erroValidacao && <Message msg={erroValidacao} type="error" />}
+                {!erroValidacao && error && <Message msg={error} type="error" />}
             </form>
             <p>
                 Não tem conta? <Link to="/auth/register">Cadastrar</Link>

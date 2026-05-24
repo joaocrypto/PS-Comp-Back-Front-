@@ -4,8 +4,10 @@ import Message from "../../components/Message";
 
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import { createFilme, resetMessage } from "../../slices/filmeSlice";
+
 
 
 
@@ -16,8 +18,10 @@ const CriarFilme = () => {
     const [genero, setGenero] = useState("");
     const [ano, setAno] = useState("");
     const [sinopse, setSinopse] = useState("");
+    const [erroValidacao, setErroValidacao] = useState("");
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const { message, error, loading } = useSelector((state) => state.filme);
 
@@ -26,6 +30,25 @@ const CriarFilme = () => {
     const handleSubmit = async (e) => {
         
         e.preventDefault();
+
+        if (!capa || !titulo.trim() || !genero.trim() || !ano.trim() || !sinopse.trim()) {
+            setErroValidacao("Todos os campos são obrigatórios!");
+            return;
+        }
+
+        const apenasNumeros = /^\d+$/.test(ano);
+
+        if (!apenasNumeros ) {
+            setErroValidacao("O ano precisa ser um número!");
+            return;
+        }
+
+        const anoNumero = Number(ano);
+
+        if ((anoNumero > new Date().getFullYear())) {
+            setErroValidacao("Digite um ano válido!");
+            return;
+        }
 
             const filme = {
             capa,
@@ -49,6 +72,9 @@ const CriarFilme = () => {
             setAno("");
             setSinopse("");
         }
+
+        setErroValidacao("");
+        
         setTimeout(() => {
             dispatch(resetMessage());
         }, 2000);
@@ -116,7 +142,8 @@ const CriarFilme = () => {
 
                 {!loading && <input type="submit" value="Criar" />}
                 {loading && <input type="submit" disabled value="Aguarde..." />}
-                {error && <Message msg={error} type="error" />}
+                {erroValidacao && <Message msg={erroValidacao} type="error" />}
+                {!erroValidacao && error && <Message msg={error} type="error" />}
                 {message && <Message msg={message} type="success" />}
             </form>
 

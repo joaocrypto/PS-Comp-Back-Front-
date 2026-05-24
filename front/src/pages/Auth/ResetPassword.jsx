@@ -15,6 +15,7 @@ const ResetPassword = () => {
     const [codigo, setCodigo] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    const [erroValidacao, setErroValidacao] = useState("");
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -24,13 +25,42 @@ const ResetPassword = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
+        if (!codigo.trim() || !email.trim() || !password || !confirmPassword) {
+            console.log(codigo, email)
+            setErroValidacao("Todos os campos são obrigatórios!");
+            return;
+        }
+
+        const apenasNumeros = /^\d+$/.test(codigo);
+
+        if ((codigo.length < 6) && !apenasNumeros) {
+            setErroValidacao("O código precisa ter no mínimo 6 números!");
+            return;
+        }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            setErroValidacao("Insira um e-mail válido!");
+            return;
+        }
+
+        if (password.length < 6) {
+            setErroValidacao("A senha precisa ter no mínimo 6 caracteres!");
+            return;
+        }
+
+        if (password !== confirmPassword) {
+            setErroValidacao("As senhas não coincidem!");
+            return;
+        }
+
         const data = {
             email,
             codigo,
             password,
             confirmPassword
         };
-
+        setErroValidacao("");
         dispatch(resetPassword(data));
     };
 
@@ -67,7 +97,8 @@ const ResetPassword = () => {
                     
                 />
                 <input type="submit" value={loading ? "Atualizando..." : "Redefinir Senha"} disabled={loading} />
-                {error && <Message msg={error} type="error" />}
+                {erroValidacao && <Message msg={erroValidacao} type="error" />}
+                {!erroValidacao && error && <Message msg={error} type="error" />}
                 {success && <Message msg="Senha redefinida com sucesso!" type="success" />}
             </form>
             <p>

@@ -16,6 +16,7 @@ const Register = () => {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [isAdmin, setIsAdmin] = useState(false);
+    const [erroValidacao, setErroValidacao] = useState("");
 
     const dispatch = useDispatch();
 
@@ -23,6 +24,27 @@ const Register = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        if (!user.trim() || !email.trim() || !password || !confirmPassword) {
+            setErroValidacao("Todos os campos são obrigatórios!");
+            return;
+        }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            setErroValidacao("Insira um e-mail válido!");
+            return;
+        }
+
+        if (password.length < 6) {
+            setErroValidacao("A senha precisa ter no mínimo 6 caracteres!");
+            return;
+        }
+
+        if (password !== confirmPassword) {
+            setErroValidacao("As senhas não coincidem!");
+            return;
+        }
 
             const usuario = {
             user,
@@ -32,7 +54,7 @@ const Register = () => {
             is_admin: isAdmin
         };
         
-        console.log(usuario);
+        setErroValidacao("");
 
         dispatch(register(usuario));
     };
@@ -69,7 +91,8 @@ const Register = () => {
                 value={confirmPassword || ""}
             />
             <input type="submit" value={loading ? "Cadastrando..." : "Cadastrar"} disabled={loading} />
-            {error && <Message msg={error} type="error" />}
+            {erroValidacao && <Message msg={erroValidacao} type="error" />}
+            {!erroValidacao && error && <Message msg={error} type="error" />}
         </form>
         <p>
             Já tem conta? <Link to="/auth/login">Entrar</Link>

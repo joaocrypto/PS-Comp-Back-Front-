@@ -21,6 +21,7 @@ const Filme = () => {
   const [nota, setNota] = useState("");    
   const [comentario, setComentario] = useState("");
   const [avaliacaoExistente, setAvaliacaoExistente] = useState(null);
+  const [erroValidacao, setErroValidacao] = useState("");
 
   const { filme, error, loading } = useSelector((state) => state.filme);
   const { avaliacoes, message: messageAvaliacao, error: errorAvaliacao, loading: loadingAvaliacao } = useSelector((state) => state.avaliacao);
@@ -57,8 +58,8 @@ const Filme = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!nota) {
-      alert("Por favor, selecione uma nota antes de enviar.");
+    if (!nota || (nota < 1) || (nota > 10)) {
+      setErroValidacao("Digite uma nota válida!");
       return;
     }
 
@@ -66,6 +67,8 @@ const Filme = () => {
       nota,
       comentario,
     };
+
+    setErroValidacao("");
 
     let checaState;
     
@@ -197,7 +200,8 @@ const Filme = () => {
                     {loadingAvaliacao && <input type="submit" disabled value="Aguarde..." />}
 
               </div>
-              {errorAvaliacao && <Message msg={errorAvaliacao} type="error" />}
+              {erroValidacao && <Message msg={erroValidacao} type="error" />}
+              {!erroValidacao && errorAvaliacao && <Message msg={errorAvaliacao} type="error" />}
               {messageAvaliacao && <Message msg={messageAvaliacao} type="success" />}
             </form>
             <section className="avaliacao-list">
