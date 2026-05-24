@@ -3,7 +3,7 @@ import avaliacaoService from "../services/avaliacaoService";
 
 const initialState = {
     avaliacao: {},
-    avaliacoes: {},
+    avaliacoes: [],
     error: false,
     success: false,
     loading: false,
