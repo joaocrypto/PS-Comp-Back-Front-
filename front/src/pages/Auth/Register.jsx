@@ -1,7 +1,7 @@
 import "./Auth.css";
 
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Message from "../../components/Message";
 
 import { useState, useEffect } from "react";
@@ -19,8 +19,9 @@ const Register = () => {
     const [erroValidacao, setErroValidacao] = useState("");
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
-    const { loading, error } = useSelector((state) => state.auth);
+    const { loading, error, success } = useSelector((state) => state.auth);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -63,7 +64,12 @@ const Register = () => {
         dispatch(reset());
     }, [dispatch]);
 
-    
+    useEffect(() => {
+        if (success) {
+            dispatch(reset());
+            navigate("/auth/login");
+        }
+    }, [success, navigate, dispatch])
 
   return (
     <div id="register">
@@ -93,6 +99,7 @@ const Register = () => {
             <input type="submit" value={loading ? "Cadastrando..." : "Cadastrar"} disabled={loading} />
             {erroValidacao && <Message msg={erroValidacao} type="error" />}
             {!erroValidacao && error && <Message msg={error} type="error" />}
+            {success && <Message msg={"Você foi registrado com sucesso!"} type="success" />}
         </form>
         <p>
             Já tem conta? <Link to="/auth/login">Entrar</Link>
