@@ -4,7 +4,7 @@ import Message from "../../components/Message";
 
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { updateFilme, listOne, resetMessage } from "../../slices/filmeSlice";
 
@@ -15,6 +15,7 @@ const AtualizarFilme = () => {
     
     const { id } = useParams();
 
+
     const [capa, setCapa] = useState("");
     const [previewCapa, setPreviewCapa] = useState("");
     const [titulo, setTitulo] = useState("");
@@ -23,7 +24,8 @@ const AtualizarFilme = () => {
     const [sinopse, setSinopse] = useState("");
 
     const dispatch = useDispatch();
-
+    const navigate = useNavigate();
+    
     const { filme, message, error, loading } = useSelector((state) => state.filme);
 
 
