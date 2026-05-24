@@ -53,6 +53,20 @@ class AutenticadorController {
             if (!usuario) {
                 return res.status(404).json({ error: 'Usuário não encontrado' });
             }
+            if (usuario.password_reset_expira) {
+                // hora em que foi criado o ultimo codigo
+                const minutoCriacao = new Date(usuario.password_reset_expira.getTime() - 15 * 60 * 1000);
+
+                // tempo em milissegundos desde o ultimo codigo 
+                const tempo = new Date() - minutoCriacao;
+
+                // se faz menos do que 1 minuto ele rejeita
+                if (tempo < (60 * 1000)) {
+                    return res.status(404).json({ error: 'Espere para enviar outro código!' });
+                }
+
+                
+            }
 
             const codigo = crypto.randomInt(100000, 999999).toString();
             const expira = new Date();
