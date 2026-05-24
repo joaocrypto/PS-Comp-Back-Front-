@@ -68,6 +68,9 @@ const CriarFilme = () => {
 
   return (
     <div id="page">
+        <button className="voltar" onClick={() => navigate(-1)}>
+        ← Voltar
+        </button>
         <div id="criar-filme">
             <h2>Criar filme</h2>
             <div className="capa">

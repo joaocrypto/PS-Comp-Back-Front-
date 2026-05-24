@@ -15,6 +15,12 @@
 .voltar {
   margin: 1em auto;
   max-width: 40%;
+  background: transparent;
+  border: none;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  margin-bottom: 1.5em;
 }
 
 .capa {

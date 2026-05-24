@@ -103,7 +103,7 @@ const AtualizarFilme = () => {
   return (
     <div id="page">
 
-            <button className="voltar-btn" onClick={() => navigate(-1)}>
+            <button className="voltar" onClick={() => navigate(-1)}>
             ← Voltar
             </button>
 
