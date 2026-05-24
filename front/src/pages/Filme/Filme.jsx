@@ -145,8 +145,8 @@ const Filme = () => {
               <div className="filme-info">
                 <h1>{filme.titulo}</h1>
                 <div className="filme-meta">
-                  <span>{filme.genero}</span>
-                  <span>{filme.ano}</span>
+                  <span>Gênero: {filme.genero}</span>
+                  <span>Ano: {filme.ano}</span>
                 </div>
                 <p className="filme-sinopse">{filme.sinopse}</p>
                 {isAdmin && (
