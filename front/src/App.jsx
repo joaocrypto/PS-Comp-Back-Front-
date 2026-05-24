@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 
 //Hooks
 import { useAuth } from './hooks/useAuth';
+import { useIsAdmin } from './hooks/useIsAdmin';
 
 //Components
 import Footer from './components/Footer';
@@ -20,6 +21,7 @@ import CriarFilme from './pages/CriarFilme/CriarFilme';
 function App() {
 
   const { auth, loading } = useAuth();
+  const { isAdmin } = useIsAdmin();
 
   if (loading) {
     return <p>Carregando...</p>
@@ -37,7 +39,7 @@ function App() {
           />
           <Route 
             path="/criar-filme" 
-            element={auth ? <CriarFilme /> : <Navigate to="/auth/login"/>}
+            element={(auth && isAdmin) ? <CriarFilme /> : <Navigate to="/auth/login"/>}
           />
           <Route 
             path="/auth/login" 
