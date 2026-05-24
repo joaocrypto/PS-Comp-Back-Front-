@@ -26,10 +26,6 @@ const Navbar = () => {
 
   return (
     <nav id="nav">
-        <form id="search-form">
-            <BsSearch />
-            <input type="text" placeholder="Pesquisar"/>
-        </form>
         <div id="logo">
             <Link to="/" >CineRate</Link>
         </div>
