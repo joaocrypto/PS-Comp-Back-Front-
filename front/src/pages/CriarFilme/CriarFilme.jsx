@@ -73,7 +73,7 @@ const CriarFilme = () => {
             {capa ? (
                       <img className="capa-imagem" src={URL.createObjectURL(capa)} alt={"Capa do Filme"} />
                   ) : (
-                      <span className="capa-cover">Sem imagem</span>
+                      <span>Sem imagem</span>
             )}
         </div>
         <form onSubmit={handleSubmit}>
