@@ -1,0 +1,651 @@
+{
+  "info": {
+    "_postman_id": "ad50c393-7605-4efb-af69-784d6b299bfc",
+    "name": "My Collection",
+    "description": "### Welcome to Postman! This is your first collection. \n\nCollections are your starting point for building and testing APIs. You can use this one to:\n\n• Group related requests\n• Test your API in real-world scenarios\n• Document and share your requests\n\nUpdate the name and overview whenever you’re ready to make it yours.\n\n[Learn more about Postman Collections.](https://learning.postman.com/docs/collections/collections-overview/)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "54313886",
+    "_collection_link": "https://go.postman.co/collection/54313886-ad50c393-7605-4efb-af69-784d6b299bfc?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Autenticar",
+      "item": [
+        {
+          "name": "login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"admin@cinerate.com\",\n    \"password\": \"admin123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "recuperar_senha",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"cocaoa@gmail.com\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/login/recuperar_senha",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "login",
+                "recuperar_senha"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "recuperar_senha_confirmar",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"cocaoa@gmail.com\",\n    \"password\": \"supermachao\",\n    \"codigo\": \"507988\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/login/recuperar_senha/confirmar",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "login",
+                "recuperar_senha",
+                "confirmar"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Usuario",
+      "item": [
+        {
+          "name": "register",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Successful POST request\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"user\": \"joao\",\n    \"email\": \"cocaoa@gmail.com\",\n    \"password\": \"cococpa\",\n    \"confirmPassword\": \"cococpa\",\n    \"is_admin\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/register",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "register"
+              ]
+            },
+            "description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+          },
+          "response": []
+        },
+        {
+          "name": "updateUsuario",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{JWT}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"user\": \"Administrador1\",\n    \"email\": \"admin1@cinerate.com\",\n    \"password\": \"admin123\",\n    \"newPassword\": \"admin1234\",\n    \"confirmPassword\": \"admin1234\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/user/update",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "user",
+                "update"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "deleteUsuario",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{JWT}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "http://localhost:3000/user/delete",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "user",
+                "delete"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Filme",
+      "item": [
+        {
+          "name": "createFilme",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Successful POST request\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{JWT}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "capa",
+                  "type": "file",
+                  "uuid": "9034ce5c-b00e-4d6e-9010-2dc6b3bd9555",
+                  "src": "/home/joao/Downloads/Borat!.jpg"
+                },
+                {
+                  "key": "titulo",
+                  "value": "Borat",
+                  "type": "text",
+                  "uuid": "ce6653cf-aadb-4331-a907-342bca6bcd91"
+                },
+                {
+                  "key": "genero",
+                  "value": "Comédia",
+                  "type": "text",
+                  "uuid": "c1527700-4ffd-42c1-9798-cc1f29dec0eb"
+                },
+                {
+                  "key": "sinopse",
+                  "value": "Um famoso repórter do Cazaquistão viaja aos Estados Unidos para fazer um documentário sobre os hábitos dos cidadãos norte-americanos, provocando situações absurdas por onde passa.",
+                  "type": "text",
+                  "uuid": "125224a4-6406-4867-b672-1a1c9ed2751e"
+                },
+                {
+                  "key": "ano",
+                  "value": "2006",
+                  "type": "text",
+                  "uuid": "8b174dfb-0a84-4b0f-9c59-4f5a25079ea0"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:3000/filmes/create-filme",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "filmes",
+                "create-filme"
+              ]
+            },
+            "description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+          },
+          "response": []
+        },
+        {
+          "name": "updateFilme",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{JWT}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "capa",
+                  "type": "file",
+                  "uuid": "d36d999e-03b0-40e8-aa4e-e38e539abf87",
+                  "src": "/home/joao/Downloads/4500402g.jpg"
+                },
+                {
+                  "key": "titulo",
+                  "value": "Batman: O Cavaleiro das Trevas",
+                  "type": "text",
+                  "uuid": "0e97433f-2a5c-47db-b07a-2d67c0be183d"
+                },
+                {
+                  "key": "genero",
+                  "value": "Drama",
+                  "type": "text",
+                  "uuid": "dde62913-ae25-4b2f-8fa8-141c3b8825e4"
+                },
+                {
+                  "key": "sinopse",
+                  "value": "Batman tem conseguido manter a ordem em Gotham com a ajuda de Jim Gordon e Harvey Dent. No entanto, um jovem e anárquico criminoso, conhecido apenas como Coringa, pretende testar o Cavaleiro das Trevas e mergulhar a cidade em caos.",
+                  "type": "text",
+                  "uuid": "6427309f-0c8a-418b-a3d4-2fad457c2c49"
+                },
+                {
+                  "key": "ano",
+                  "value": "2008",
+                  "type": "text",
+                  "uuid": "917a64c1-1992-40e2-a9e7-e0ead5a3421f"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:3000/filmes/update-filme/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "filmes",
+                "update-filme",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "deleteFilme",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{JWT}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3000/filmes/delete-filme/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "filmes",
+                "delete-filme",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "listaFilme",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{JWT}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3000/filmes/list-filme/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "filmes",
+                "list-filme",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "listaAllFilmes",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{JWT}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3000/filmes/list-all-filmes/",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "filmes",
+                "list-all-filmes",
+                ""
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Avaliacao",
+      "item": [
+        {
+          "name": "createAvaliacao",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Successful POST request\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{JWT}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"nota\": 5,\n    \"comentario\": \"Ótimo filme!\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/filmes/list-filme/1/create-avaliacao",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "filmes",
+                "list-filme",
+                "1",
+                "create-avaliacao"
+              ]
+            },
+            "description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+          },
+          "response": []
+        },
+        {
+          "name": "updateAvaliacao",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Successful POST request\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{JWT}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"nota\": 6,\n    \"comentario\": \"Ótimo filme!\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/filmes/list-filme/1/update-avaliacao",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "filmes",
+                "list-filme",
+                "1",
+                "update-avaliacao"
+              ]
+            },
+            "description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+          },
+          "response": []
+        },
+        {
+          "name": "deleteAvaliacao",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{JWT}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"nota\": 5,\n    \"comentario\": \"Ótimo filme!\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/filmes/list-filme/1/delete-avaliacao",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "filmes",
+                "list-filme",
+                "1",
+                "delete-avaliacao"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "listAvaliacao",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{JWT}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3000/filmes/list-filme/1/list-avaliacao",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "filmes",
+                "list-filme",
+                "1",
+                "list-avaliacao"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
