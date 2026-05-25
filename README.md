@@ -844,20 +844,5 @@ Armazena:
 * Comentários
 * Relação usuário-filme
 
----
-
-# 🐳 Docker
-
-O projeto possui:
-
-* Dockerfile para backend.
-* Dockerfile para frontend.
-* docker-compose.yml.
-
-## Executar com Docker
-
-```bash
-docker-compose up --build
-```
 
 
