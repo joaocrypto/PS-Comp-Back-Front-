@@ -109,7 +109,7 @@ yarn
 
 ---
 
-## 3. Configure o arquivo `.env`
+## 3. Configure o arquivo `.env` na pasta RAIZ junto com o docker-compose.yml
 
 Exemplo:
 
@@ -215,7 +215,7 @@ O projeto possui:
 * Dockerfile para frontend.
 * docker-compose.yml.
 
-## Executar com Docker
+## Executar com Docker (Recomendado)
 
 ```bash
 docker compose up --build
